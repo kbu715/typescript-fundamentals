@@ -1,21 +1,58 @@
 // api url
-var url = 'https://jsonplaceholder.typicode.com/users/1';
+const url = 'https://jsonplaceholder.typicode.com/users/1';
 
 // dom
-var username = document.querySelector('#username');
-var email = document.querySelector('#email');
-var address = document.querySelector('#address');
+const username = document.querySelector('#username');
+const email = document.querySelector('#email');
+const address = document.querySelector('#address');
 
 // user data
-var user = {};
+let user = {};
+
+// jsdoc ('https://devdocs.io/jsdoc/')
+/**
+ *
+ *
+ *
+ */
+
+//type의 property를 정의
+/**
+ * @typedef {object} Address
+ * @property {string} street
+ * @property {string} city
+ */
+
+/**
+ * @typedef {object} User
+ * @property {string} name
+ * @property {string} email
+ * @property {Address} address
+ */
+
+/**
+ * @returns {Promise<User>}
+ */
+
+function fetchUser() {
+  return axios.get(url);
+}
+
+//위의 jsdoc의 정의 때문에 어떤 type의 어떤 property가 있는지 vscode에서 제공해준다.
+
+fetchUser().then(function (response) {
+  console.log(response.data.address.city);
+});
 
 function startApp() {
-  axios
-    .get(url)
+  fetchUser()
     .then(function (response) {
-      console.log(response);
       user = response.data;
       // TODO: 이름, 이메일, 주소 표시하기
+      // console.log(user.name);
+      username.innerText = user.name;
+      email.innerText = user.email;
+      address.innerText = user.address.street;
     })
     .catch(function (error) {
       console.log(error);
