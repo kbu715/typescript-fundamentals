@@ -29,3 +29,22 @@ type Hero = {
 const capt: Hero = { 
   // skill: 'throwing a shield' 
 }
+
+
+// type MySkill = {
+//   frontend: string;
+//   backend: string;
+//   database: string;
+// }
+
+interface MySkill {
+  frontend: string;
+  backend: string;
+  database: string;
+}
+
+const skill:MySkill = {
+  frontend: 'React',
+  backend: 'Node.js',
+  database: 'mongoDB'
+}

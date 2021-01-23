@@ -150,3 +150,37 @@ const paul: Developer = {
     language: 'typescript'
 }
 ```
+
+
+#### 타입 별칭(Type Aliases)
+
+타입 별칭은 특정 타입이나 인터페이스를 참조할 수 있는 타입 변수를 의미한다.
+
+```
+//스트링 타입을 사용할 때
+const name: string = 'paul';
+
+//타입 별칭을 사용할 때
+type MyName = string;
+const name: MyName = 'paul';
+```
+
+#### type 과 interface의 차이점
+
+##### 타입 별칭의 특징
+타입 별칭은 새로운 타입 값을 하나 생성하는 것이 아니라 정의한 타입에 대해 나중에 쉽게 참고
+할 수 있게 이름을 부여하는 것과 같다. 이러한 특징은 VSCode상의 프리뷰 상태로 다른 타입과 어떤 
+차이점이 있는지 확인해볼 수 있다.
+
+- type별칭
+![type별칭](https://user-images.githubusercontent.com/63832678/105606589-ae65e100-5ddd-11eb-9d7d-b2ea90e42180.png)
+
+- interface
+![인터페이스](https://user-images.githubusercontent.com/63832678/105606601-c473a180-5ddd-11eb-9177-5aa31e45abe4.png)
+
+
+type vs interface
+타입별칭과 인터페이스의 가장 큰 차이점은 타입의 확장 가능/불가능 여부이다.
+인터페이스는 확장이 가능한데(extends, 상속) 반해 타입별칭은 불가능하다. 따라서, type보다는 interface로 선언해서 사용하는 것을 추천한다.
+
+- 좋은 소프트웨어는 언제나 확장이 용이해야 한다.
