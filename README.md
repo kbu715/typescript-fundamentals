@@ -86,3 +86,67 @@ function sum(a: number, b: number): number {
 
     //특정 파라미터를 선택적으로 쓰고싶다하면 ?(Optional Parameter)를 쓰자.
 ```
+
+#### 인터페이스
+
+```
+// 인터페이스
+interface User {
+  name: string;
+  age: number;
+}
+```
+
+```
+// 함수의 스펙(구조)에 인터페이스를 활용
+interface SumFunction {
+    (a: number, b: number): number;
+}
+
+let sum: SumFunction;
+sum = function(a: number, b: number){
+    return a + b;
+}
+```
+
+```
+// 배열의 인덱싱에 사용하는 경우
+interface StringArray {
+    [index: number]: string;
+}
+    let arr: StringArray;
+    arr[0] = 'hi';
+    arr[1] = 10;
+```
+
+```
+//객체 접근 방식인 <딕셔너리 패턴><dictionary pattern>
+interface StringRegexDictionary {
+  [key: string]: RegExp
+}
+
+let obj: StringRegexDictionary = {
+  cssFile: /\.css$/,
+  jsFile: /\.js$/
+}
+
+```
+
+```
+// 인터페이스 확장(extends, 상속)
+interface Person {
+    name: string;
+    age: number;
+}
+
+interface Developer extends Person {
+    language: string;
+}
+
+
+const paul: Developer = {
+    name: 'kang',
+    age: 20,
+    language: 'typescript'
+}
+```
