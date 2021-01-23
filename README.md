@@ -37,7 +37,7 @@ tsc index.ts
 - boolean
 
 - object
-- { age: number, name: string }
+- { age: number; name: string }
 
 ```
     const person: { age: number; name: string } = { age: 100, name: 'Capt' };
