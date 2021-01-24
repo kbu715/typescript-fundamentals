@@ -244,3 +244,61 @@ function askSomeone(someone: Developer & Person) {
 
 유니온 | : a 타입이거나 b타입이거나
 인터섹션 & : a 타입과 b 타입의 속성을 모두 합친 새로운 c 타입, 호출할 때 모든 속성을 다 적어줘야 에러가 안난다.
+
+
+#### 이넘 enum
+특정 값들의 집합을 의미하는 자료형이다. 예를 들어 드랍다운 목록으로 사용하기 좋다.
+좀 더 정확한 코드와 예외처리의 코드량을 줄일 수 있다.
+
+- 숫자형 이넘
+
+```
+enum Shoes {
+  Nike,
+  Adidas
+}
+
+let myShoes = Shoes.Nike;
+console.log(myShoes); // 0 
+myShoes = Shoes.Adidas;
+console.log(myShoes) // 1
+
+// 별도의 값을 지정하지 않으면 숫자형 이넘으로 취급을 한다.
+```
+
+- 문자형 이넘
+```
+enum Shoes {
+  Nike = '나이키',
+  Adidas = '아디다스'
+}
+
+let myShoes = Shoes.Nike;
+console.log(myShoes); // '나이키'
+myShoes = Shoes.Adidas;
+console.log(myShoes) // '아디다스'
+```
+
+#### 이넘 활용 사례
+
+```
+enum Answer {
+  Yes = 'y',
+  No = 'n'
+}
+
+function askQuestion(answer: Answer){
+  if(answer === Answer.Yes){
+    console.log('정답입니다.');
+  }
+  if(answer === Answer.No){
+    console.log('오답입니다.');
+  }
+}
+
+
+askQuestion('yes')' // error
+
+askQuestion(Answer.Yes); // O //이넘에서 제공하는 데이터만 넘길 수 있다.
+```
+
