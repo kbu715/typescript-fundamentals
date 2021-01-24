@@ -36,5 +36,5 @@ interface Person {
 
 function askSomeone(someone: Developer | Person) {
   someone.name; // O
-  someone.age; // X
+  someone.age; // X // 공통 속성만 접근 가능 (유니온 타입의 특징)
 }

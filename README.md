@@ -184,3 +184,63 @@ type vs interface
 인터페이스는 확장이 가능한데(extends, 상속) 반해 타입별칭은 불가능하다. 따라서, type보다는 interface로 선언해서 사용하는 것을 추천한다.
 
 - 좋은 소프트웨어는 언제나 확장이 용이해야 한다.
+
+#### Union Type 유니온 타입 '|'
+
+하나의 타입 이상 쓸 수 있게 해준다.
+
+```
+function logMessage(value: string | number | boolean){
+    console.log(value)
+}
+logMessage('hello')
+logMessage(100)
+```
+
+유니온 타입의 장점
+- 특정한 타입에 대한 api나 속성들을 미리 제공받을 수 있다.
+```
+function logMessage(value: string | number) {
+  if (typeof value === 'string') {
+    value.toLocaleUpperCase();
+  }
+  if (typeof value === 'number') {
+    value.toLocaleString();
+  }
+  throw new TypeError('value must be string or number')
+}   
+```
+
+타입 가드 : 특정 타입으로 타입의 범위를 좁혀나가는 (필터링하는) 과정
+---------------------------------------------------------------
+
+#### Intersection Type - '&'
+
+```
+interface Developer {
+  name: string;
+  skill: string;
+}
+
+interface Person {
+  name: string;
+  age: number;
+}
+
+function askSomeone(someone: Developer | Person) {
+  someone.name; // O
+  someone.age; // X // 공통 속성만 접근 가능 (유니온 타입의 특징)
+}
+
+function askSomeone(someone: Developer & Person) {
+  someone.name; // O
+  someone.age; // O // 모든 속성 접근 가능
+  someone.skill;
+}
+
+```
+
+#### 유니온 타입과 인터섹션 타입의 차이점
+
+유니온 | : a 타입이거나 b타입이거나
+인터섹션 & : a 타입과 b 타입의 속성을 모두 합친 새로운 c 타입, 호출할 때 모든 속성을 다 적어줘야 에러가 안난다.
