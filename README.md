@@ -302,3 +302,21 @@ askQuestion('yes')' // error
 askQuestion(Answer.Yes); // O //이넘에서 제공하는 데이터만 넘길 수 있다.
 ```
 
+
+#### 타입스크립트 class 
+
+```
+class Person {
+  private name: string;
+  public age: number;
+  readonly log: string;
+
+  constructor(name: string, age: number){
+    this.name = name;
+    this.age = age;
+  }
+}
+```
+
+멤버 변수에 대한 변수의 유효범위 -> **private**, **public**, **protected**(기본적으로 public이다)
+__readonly__ : 접근만 할 수 있고 변경할 순 없다. -> 읽기만 할 수 있다.
