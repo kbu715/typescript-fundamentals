@@ -21,9 +21,30 @@ interface Global {
   TotalRecovered: number;
 }
 
+export enum CovidStatus {
+  Confirmed = 'confirmed',
+  Recovered = 'recovered',
+  Deaths = 'deaths',
+}
+
+interface CountrySummaryInfo {
+  Cases: number;
+  City: string;
+  CityCode: string;
+  Country: string;
+  CountryCode: string;
+  Date: string;
+  Lat: string;
+  Lon: string;
+  Province: string;
+  Status: CovidStatus;
+}
+
 export interface CovidSummaryResponse {
   Countries: Country[];
   Date: string;
   Global: Global;
   Message: string;
 }
+
+export type CountrySummaryResponse = CountrySummaryInfo[];
