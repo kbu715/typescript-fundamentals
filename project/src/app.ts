@@ -48,7 +48,6 @@ function createSpinnerElement(id: string) {
 
 // state
 let isDeathLoading = false;
-const isRecoveredLoading = false;
 
 // api
 function fetchCovidSummary(): Promise<AxiosResponse<CovidSummaryResponse>> {
@@ -76,7 +75,7 @@ function initEvents() {
   rankList.addEventListener('click', handleListClick);
 }
 
-async function handleListClick(event: any) {
+async function handleListClick(event: MouseEvent) {
   let selectedId;
   if (
     event.target instanceof HTMLParagraphElement ||
@@ -188,8 +187,9 @@ async function setupData() {
   setLastUpdatedTimestamp(data);
 }
 
-function renderChart(data: any, labels: any) {
-  const ctx = ($('#lineChart') as HTMLCanvasElement).getContext('2d');
+function renderChart(data: number[], labels: string[]) {
+  const lineChart = $('#lineChart') as HTMLCanvasElement;
+  const ctx = lineChart.getContext('2d');
   Chart.defaults.global.defaultFontColor = '#f5eaea';
   Chart.defaults.global.defaultFontFamily = 'Exo 2';
   new Chart(ctx, {
