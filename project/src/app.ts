@@ -1,5 +1,8 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import Chart from 'chart.js';
+// 타입 모듈
+import { CovidSummaryResponse } from './covid/index';
+
 // utils
 function $(selector: string) {
   return document.querySelector(selector);
@@ -42,7 +45,7 @@ let isDeathLoading = false;
 const isRecoveredLoading = false;
 
 // api
-function fetchCovidSummary() {
+function fetchCovidSummary(): Promise<AxiosResponse<CovidSummaryResponse>> {
   const url = 'https://api.covid19api.com/summary';
   return axios.get(url);
 }
