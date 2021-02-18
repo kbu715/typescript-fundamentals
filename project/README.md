@@ -64,3 +64,36 @@ Ex. chart.js
 
 axios 같은 경우는 이미 내부적으로 타입이 정의되어 있다.
 index.d.ts 안에 타입 정의되어 있음
+
+
+## 타입정의가 제공되는 오픈소스 라이브러리 검색 사이트(타입스크립트 공식문서)
+
+- [https://www.typescriptlang.org/dt/search?search=](https://www.typescriptlang.org/dt/search?search=)
+
+## DefinitelyTyped Github repo
+
+- [https://github.com/DefinitelyTyped/DefinitelyTyped](https://github.com/DefinitelyTyped/DefinitelyTyped)
+
+## 타입 선언 라이브러리가 제공되지 않는 외부 라이브러리 대처 방법
+
+타입 선언 파일을 직접 정의한다.
+
+index.d.ts
+
+```
+   declare module '라이브러리 이름' {
+      //...
+   }
+```
+
+여기서 중요 포인트!
+
+tsconfig에서 typeRoots 정의 해줘야 한다.
+
+```
+        "typeRoots": [
+            "./node_modules/@types",
+            "./types"
+        ]
+```
+"./types" : 임의로 정의한 루트
