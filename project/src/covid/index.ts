@@ -27,7 +27,7 @@ export enum CovidStatus {
   Deaths = 'deaths',
 }
 
-interface CountrySummaryInfo {
+export interface CountrySummaryInfo {
   Cases: number;
   City: string;
   CityCode: string;
