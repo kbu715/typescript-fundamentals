@@ -20,12 +20,13 @@ module.exports = {
         useTabs: false,
         tabWidth: 2,
         printWidth: 80,
-        bracketSpacing: true,
-        arrowParens: 'avoid',
+        bracketSpacing: true, // Example: { food: 'chicken' }
+        arrowParens: 'avoid', // Example: (possible) x => x+x;
       },
     ],
   },
   parserOptions: {
+    // 타입스크립트를 ESLint가 이해할 수 있는 트리형태로 바꿔준다.
     parser: '@typescript-eslint/parser',
   },
 };
