@@ -10,8 +10,14 @@ import {
 } from './covid/index';
 
 // utils
-function $(selector: string) {
-  return document.querySelector(selector);
+// DOM 접근 함수
+// HTMLElement 하위 타입들만 받게 제한.
+// 타입단언이 이런식으로 (return element as T) 제네릭과 함께 쓰여 좋은 유틸 기능으로 쓰일 수 있다.
+// `T extends HTMLElement = HTMLDivElement` 에서 HTMLDivElement 는 디폴트 타입
+// const abc = $('.abc'); --> abc 타입은 HTMLDivElement
+function $<T extends HTMLElement = HTMLDivElement>(selector: string) {
+  const element = document.querySelector(selector);
+  return element as T;
 }
 function getUnixTimestamp(date: Date | string) {
   return new Date(date).getTime();
@@ -20,14 +26,14 @@ function getUnixTimestamp(date: Date | string) {
 // DOM
 // var a: Element | HTMLElement | HTMLParagraphElement
 // 점점 구체화 된다. Element -> HTMLElement -> HTMLParagraphElement
-const confirmedTotal = $('.confirmed-total') as HTMLSpanElement;
+const confirmedTotal = $<HTMLSpanElement>('.confirmed-total');
 // 타입 단언(Type Assertion)
 const deathsTotal = $('.deaths') as HTMLParagraphElement;
 const recoveredTotal = $('.recovered') as HTMLParagraphElement;
 const lastUpdatedTime = $('.last-updated-time') as HTMLParagraphElement;
-const rankList = $('.rank-list');
-const deathsList = $('.deaths-list');
-const recoveredList = $('.recovered-list');
+const rankList = $('.rank-list') as HTMLOListElement;
+const deathsList = $('.deaths-list') as HTMLOListElement;
+const recoveredList = $('.recovered-list') as HTMLOListElement;
 const deathSpinner = createSpinnerElement('deaths-spinner');
 const recoveredSpinner = createSpinnerElement('recovered-spinner');
 
@@ -56,7 +62,7 @@ function fetchCovidSummary(): Promise<AxiosResponse<CovidSummaryResponse>> {
 }
 
 function fetchCountryInfo(
-  countryCode: string,
+  countryCode: string | undefined,
   status: CovidStatus
 ): Promise<AxiosResponse<CountrySummaryResponse>> {
   // status params: confirmed, recovered, deaths
@@ -72,16 +78,21 @@ function startApp() {
 
 // events
 function initEvents() {
+  if (!rankList) {
+    return;
+  }
   rankList.addEventListener('click', handleListClick);
 }
 
-async function handleListClick(event: MouseEvent) {
+async function handleListClick(event: Event) {
   let selectedId;
   if (
     event.target instanceof HTMLParagraphElement ||
     event.target instanceof HTMLSpanElement
   ) {
-    selectedId = event.target.parentElement.id;
+    selectedId = event.target.parentElement
+      ? event.target.parentElement.id
+      : undefined;
   }
   if (event.target instanceof HTMLLIElement) {
     selectedId = event.target.id;
@@ -129,12 +140,21 @@ function setDeathsList(data: CountrySummaryResponse) {
     p.textContent = new Date(value.Date).toLocaleDateString().slice(0, -1);
     li.appendChild(span);
     li.appendChild(p);
+    // no non null assertion (null이 아니다라고 단언)
+    // deathsList.appendChild(li);
+
+    if (!deathsList) {
+      return;
+    }
     deathsList.appendChild(li);
   });
 }
 
 function clearDeathList() {
-  deathsList.innerHTML = null;
+  if (!deathsList) {
+    return;
+  }
+  deathsList.innerHTML = '';
 }
 
 function setTotalDeathsByCountry(data: CountrySummaryResponse) {
@@ -156,12 +176,15 @@ function setRecoveredList(data: CountrySummaryResponse) {
     p.textContent = new Date(value.Date).toLocaleDateString().slice(0, -1);
     li.appendChild(span);
     li.appendChild(p);
+    // optional chaining!!!
+    // recoveredList?.appendChild(li);
+    // non null assertion 보다는 optional chaining을 쓰자...
     recoveredList.appendChild(li);
   });
 }
 
 function clearRecoveredList() {
-  recoveredList.innerHTML = null;
+  recoveredList.innerHTML = '';
 }
 
 function setTotalRecoveredByCountry(data: CountrySummaryResponse) {
@@ -188,8 +211,8 @@ async function setupData() {
 }
 
 function renderChart(data: number[], labels: string[]) {
-  const lineChart = $('#lineChart') as HTMLCanvasElement;
-  const ctx = lineChart.getContext('2d');
+  const lineChart = $<HTMLCanvasElement>('#lineChart');
+  const ctx = lineChart.getContext('2d') as CanvasRenderingContext2D;
   Chart.defaults.global.defaultFontColor = '#f5eaea';
   Chart.defaults.global.defaultFontFamily = 'Exo 2';
   new Chart(ctx, {

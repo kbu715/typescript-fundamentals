@@ -14,7 +14,9 @@
         "typeRoots": [
             "./node_modules/@types",
             "./types"
-        ]
+        ], 
+        "strict": true,
+        // "strictFunctionTypes": false
     },
     "include": [
         "./src/**/*"
