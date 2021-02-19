@@ -105,3 +105,11 @@ tsconfig에서 typeRoots 정의 해줘야 한다.
 - [strictBindCallApply 옵션](https://www.typescriptlang.org/tsconfig#strictBindCallApply)
 - [strictPropertyInitialization 옵션](https://www.typescriptlang.org/tsconfig#strictPropertyInitialization)
 - [noImplicitThis 옵션](https://www.typescriptlang.org/tsconfig#noImplicitThis)
+
+## 타입스크립트 doc
+
+타입스크립트 공식 문서
+- [https://www.typescriptlang.org/docs/](https://www.typescriptlang.org/docs/)
+
+타입스크립트 deep dive
+- [https://basarat.gitbook.io/typescript/](https://basarat.gitbook.io/typescript/)
