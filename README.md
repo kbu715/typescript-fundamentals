@@ -320,3 +320,72 @@ class Person {
 
 멤버 변수에 대한 변수의 유효범위 -> **private**, **public**, **protected**(기본적으로 public이다)
 __readonly__ : 접근만 할 수 있고 변경할 순 없다. -> 읽기만 할 수 있다.
+
+
+### 제네릭
+제네릭은 C#, Java 등의 언어에서 재사용성이 높은 컴포넌트를 만들 때 자주 활용되는 특징입니다. 특히, 한가지 타입보다 여러 가지 타입에서 동작하는 컴포넌트를 생성하는데 사용됩니다.
+
+예시
+```
+function getText<T>(text: T): T {
+  return text;
+}
+```
+
+```
+getText<string>('hi');
+getText<number>(10);
+getText<boolean>(true);
+```
+
+```
+//인터페이스 제네릭 사용 예
+interface Item<T> {
+  value: T;
+  selected: boolean;
+}
+```
+
+```
+//제네릭의 타입 제한1 
+function logTextLength<T>(text: T[]): T[] { //배열인 것을 힌트를 준다고 생각한다.
+  console.log(text.length);
+  text.forEach(function (text) {
+    console.log(text);
+  })
+  return text;
+}
+```
+
+```
+//제네릭의 타입 제한2 정의된 타입 이용하기
+interface LengthType {
+  length: number;
+}
+
+function logTextLength<T extends LengthType>(text: T): T {
+  text.length;
+  return text;
+}
+
+logTextLength(10); // error
+logTextLength({ length: 10 });
+
+```
+
+```
+//제네릭의 타입 제한3 - keyof
+interface ShoppingItems {
+  name: string;
+  price: number;
+  stock: number;
+}
+
+function getShoppingItemOption<T extends keyof ShoppingItem>(itemOption: T): T {
+  return itemOption;
+}
+
+getShoppingItemOption('name')
+getShoppingItemOption('price')
+getShoppingItemOption('stock')
+```
