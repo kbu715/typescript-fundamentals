@@ -31,7 +31,7 @@ tsc index.ts
 - string
 - number
 
-- Array<number>, Array<string>
+- Array`<number>`, Array`<string>`
 - number[], string[]
 
 - boolean
@@ -389,3 +389,11 @@ getShoppingItemOption('name')
 getShoppingItemOption('price')
 getShoppingItemOption('stock')
 ```
+
+### 타입추론
+
+#### 타입추론의 기본
+```
+  let x = 3;
+```
+위와 같이 x에 대한 타입을 따로 지정하지 않더라도 일단 x는 number로 간주된다. 이렇게 변수를 선언하거나 초기화 할 때 타입이 추론된다.
