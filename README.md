@@ -437,10 +437,28 @@ let arr = [0, 1, null];
 null로 구분하는데 이 때 Best Common Type 알고리즘으로 다른 타입들과
 가장 잘 호환되는 타입을 선정.
 
-### 타입스크립트의 타입 체킹
+#### 타입스크립트의 타입 체킹
 타입 체킹에 있어서 타입스크립트의 지향점은 타입 체크는 값의 형태에 기반하여 이루어져야 한다는 점이다. 이걸 Duck Typing 또는 Structural Subtyping 이라고 한다.
 
 > TIP
 
 > Duck Typing : 객체의 변수 및 메서드의 집합이 객체의 타입을 결정하는 > 것을 의미. 동적 타이핑의 한 종류 
 > Structural Subtyping : 객체의 실제 구조나 정의에 따라 타입을 결정하는 것을 의미
+
+
+### 타입 단언 (type assertion)
+
+타입을 개발자가 더 잘 알고 있다!! 타입스크립트에게 이건 무슨 타입이야 라고 말하는 것.
+
+```
+  let a;
+  a = 'a';
+  a = 30;
+  let b = a as string;
+```
+
+타입 단언은 `DOM API` 조작에 가장 많이 쓰인다.
+```
+let div = document.querySelector('.container') as HTMLDivElement;
+div.innerText;
+```
