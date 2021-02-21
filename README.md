@@ -479,3 +479,102 @@ div.innerText;
     tony.age
   }
 ```
+
+
+#### 타입 호환 (Type Compatiblility)
+
+```
+interface Ironman {
+  name: string;
+}
+
+class Avengers {
+  name: string;
+}
+
+let i: Ironman;
+i = new Avengers(); // OK, because of structural typing  
+```
+
+구조적 타이핑 예시
+- **구조적 타이핑(structural typing)**이란 코드 구조 관점에서 타입이 서로 호환되는지의 여부를 판단하는 것이다. 아래 코드를 보자.
+
+```
+interface Avengers {
+  name: string;
+}
+
+let hero: Avengers;
+// 타입스크립트가 추론한 y의 타입은 { name: string; location: string; } 입니다.
+let capt = { name: "Captain", location: "Pangyo" };
+hero = capt;
+```
+위 코드에서 capt가 hero 타입에 호환될 수 있는 이유는 capt의 속성 중에 name이 있기 때문이다. Avengers 인터페이스에서 name 속성을 갖고 있기 때문에 capt는 Avengers 타입에 호환될 수 있다.
+
+
+예시들
+```
+// 인터페이스
+interface Developer {
+    name: string;
+    skill: string;
+}
+
+interface Person {
+    name: string;
+}
+
+// 클래스
+class Person {
+    name: string;
+}
+
+let developer: Developer;
+let person: Person;
+
+// developer = person; //호환 x
+
+// developer = new Person(); // 호환 x
+
+person = developer; //호환 o
+
+
+
+// 함수
+
+let add = function(a : number){
+    // ...
+}
+
+let sum = function(a : number, b: number){
+    // ...
+}
+
+// add = sum; //호환 x
+
+sum = add; //호환 o
+
+// 제네릭
+
+interface Empty<T> {
+    // ...
+}
+
+let empty1: Empty<string>;
+let empty2: Empty<number>;
+
+empty1 = empty2;
+empty2 = empty1;
+
+// 둘다 쌉가능, 구조적으로 같기 때문에
+
+interface NotEmpty<T> {
+    data: T;
+}
+
+let notempty1: NotEmpty<string>;
+let notempty2: NotEmpty<number>;
+
+notempty1 = notempty2; // 호환 x
+notempty2 = notempty1; // 호환 x
+```

@@ -14,11 +14,11 @@ getValue('hi').toLocaleUpperCase();
 getValue(100).toLocaleString();
 
 // 제네릭 기본 문법 - 인터페이스
-interface Developer<T> {
-  name: string;
-  age: T;
-}
-const tony: Developer<number> = { name: 'tony', age: 100 };
+// interface Developer<T> {
+//   name: string;
+//   age: T;
+// }
+// const tony: Developer<number> = { name: 'tony', age: 100 };
 
 // 제네릭 타입 제한 - 구체적인 타입
 // function getNumberAndArray<T>(value: T): T {
