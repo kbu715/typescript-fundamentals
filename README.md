@@ -442,7 +442,7 @@ null로 구분하는데 이 때 Best Common Type 알고리즘으로 다른 타�
 
 > TIP
 
-> Duck Typing : 객체의 변수 및 메서드의 집합이 객체의 타입을 결정하는 > 것을 의미. 동적 타이핑의 한 종류 Structural Subtyping : 객체의 실제 구조나 정의에 따라 타입을 결정하는 것을 의미
+> Duck Typing : 객체의 변수 및 메서드의 집합이 객체의 타입을 결정하는 것을 의미. 동적 타이핑의 한 종류 Structural Subtyping : 객체의 실제 구조나 정의에 따라 타입을 결정하는 것을 의미
 
 
 ### 타입 단언 (type assertion)
