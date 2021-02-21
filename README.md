@@ -462,3 +462,20 @@ null로 구분하는데 이 때 Best Common Type 알고리즘으로 다른 타�
 let div = document.querySelector('.container') as HTMLDivElement;
 div.innerText;
 ```
+#### 타입가드
+
+
+타입 가드 정의 (실제 많이 사용되는 패턴)
+```
+  function isDeveloper(target: Developer | Person): target is Developer {
+    return (target as Developer).skill !== undefined;
+  }
+```
+사용 예
+```
+  if (isDeveloper(tony)) {
+    tony.skill
+  } else {
+    tony.age
+  }
+```
