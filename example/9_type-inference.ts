@@ -1,6 +1,7 @@
-var a = 'a';
+var a = 30;
 
 function logA(a = 'a') {
+  console.log(a);
   var b = 10;
   return b;
 }

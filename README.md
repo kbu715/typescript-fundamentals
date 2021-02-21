@@ -31,7 +31,7 @@ tsc index.ts
 - string
 - number
 
-- Array`<number>`, Array`<string>`
+- `Array<number>`, `Array<string>`
 - number[], string[]
 
 - boolean
@@ -397,3 +397,50 @@ getShoppingItemOption('stock')
   let x = 3;
 ```
 위와 같이 x에 대한 타입을 따로 지정하지 않더라도 일단 x는 number로 간주된다. 이렇게 변수를 선언하거나 초기화 할 때 타입이 추론된다.
+이외에도 변수, 속성, 인자의 기본 값, 함수의 반환값 등을 설정할 때 타입 추론이 일어난다.
+```
+  function getB(b = 10) {
+    const c = 'hi';
+    return b + c; // return 값도 string으로 추론
+  }
+
+  // 10 + '10' (string으로 간주됨)
+```
+
+복잡한 구조
+```
+interface Dropdown<T> {
+  value: T
+  title: string;
+}
+
+interface DetailedDropdown<K> extends Dropdown<T> {
+  description: string;
+  tag: K;
+}
+
+var detailItems: DetailedDropdown<number> = {
+  value: 'hi', // error: Type 'string' is not assignable to type 'number'.
+  title: 'a',
+  description: 'b',
+  tag: 'c' // error: Type 'string' is not assignable to type 'number'.
+}
+```
+
+#### 가장 적절한 타입(Best Common Type)
+타입은 보통 몇 개의 표현식(코드)을 바탕으로 타입을 추론한다. 그리고 그 표현식을 이용하여 가장 근접한 타입을 추론하게 되는데 이 가장 근접한 타입을 Best Common Type이라고 한다.
+```
+let arr = [0, 1, null];
+
+```
+위 변수 arr의 타입을 추론하기 위해서 배열의 각 아이템을 크게 number와
+null로 구분하는데 이 때 Best Common Type 알고리즘으로 다른 타입들과
+가장 잘 호환되는 타입을 선정.
+
+### 타입스크립트의 타입 체킹
+타입 체킹에 있어서 타입스크립트의 지향점은 타입 체크는 값의 형태에 기반하여 이루어져야 한다는 점이다. 이걸 Duck Typing 또는 Structural Subtyping 이라고 한다.
+
+> TIP
+
+> Duck Typing : 객체의 변수 및 메서드의 집합이 객체의 타입을 결정하는 > 것을 의미. 동적 타이핑의 한 종류 
+> Structural Subtyping : 객체의 실제 구조나 정의에 따라 타입을 결정하는 것을 의미
