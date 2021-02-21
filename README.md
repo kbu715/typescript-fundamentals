@@ -578,3 +578,9 @@ let notempty2: NotEmpty<number>;
 notempty1 = notempty2; // 호환 x
 notempty2 = notempty1; // 호환 x
 ```
+
+#### Soundness란?
+타입스크립트는 컴파일 시점에 타입을 추론할 수 없는 특정 타입에 대해서 일단 안전하다고 보는 특성이 있다. 이걸 "들리지 않는다(it is said to not be sound)"라고 표현한다.
+
+#### 타입 모듈화
+export, import
