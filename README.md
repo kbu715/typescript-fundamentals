@@ -172,10 +172,10 @@ const name: MyName = 'paul';
 할 수 있게 이름을 부여하는 것과 같다. 이러한 특징은 VSCode상의 프리뷰 상태로 다른 타입과 어떤 
 차이점이 있는지 확인해볼 수 있다.
 
-- type별칭
+type별칭
 ![type별칭](https://user-images.githubusercontent.com/63832678/105606589-ae65e100-5ddd-11eb-9d7d-b2ea90e42180.png)
 
-- interface
+interface
 ![인터페이스](https://user-images.githubusercontent.com/63832678/105606601-c473a180-5ddd-11eb-9177-5aa31e45abe4.png)
 
 
@@ -187,7 +187,7 @@ type vs interface
 
 #### Union Type 유니온 타입 '|'
 
-하나의 타입 이상 쓸 수 있게 해준다.
+하나의 타입 이상 쓸 수 있게 해준다. 
 
 ```
 function logMessage(value: string | number | boolean){
@@ -242,15 +242,15 @@ function askSomeone(someone: Developer & Person) {
 
 #### 유니온 타입과 인터섹션 타입의 차이점
 
-유니온 | : a 타입이거나 b타입이거나
-인터섹션 & : a 타입과 b 타입의 속성을 모두 합친 새로운 c 타입, 호출할 때 모든 속성을 다 적어줘야 에러가 안난다.
+유니온 **|** : a 타입이거나 b타입이거나
+인터섹션 **&** : a 타입과 b 타입의 속성을 모두 합친 새로운 c 타입, 호출할 때 모든 속성을 다 적어줘야 에러가 안난다.
 
 
 #### 이넘 enum
-특정 값들의 집합을 의미하는 자료형이다. 예를 들어 드랍다운 목록으로 사용하기 좋다.
+특정 값들의 집합을 의미하는 자료형이다. 예를 들어 `드랍다운` 목록으로 사용하기 좋다.
 좀 더 정확한 코드와 예외처리의 코드량을 줄일 수 있다.
 
-- 숫자형 이넘
+- 숫자형 enum
 
 ```
 enum Shoes {
@@ -266,7 +266,7 @@ console.log(myShoes) // 1
 // 별도의 값을 지정하지 않으면 숫자형 이넘으로 취급을 한다.
 ```
 
-- 문자형 이넘
+- 문자형 enum
 ```
 enum Shoes {
   Nike = '나이키',
@@ -322,7 +322,7 @@ class Person {
 __readonly__ : 접근만 할 수 있고 변경할 순 없다. -> 읽기만 할 수 있다.
 
 
-### 제네릭
+### 제네릭 Generics
 제네릭은 C#, Java 등의 언어에서 재사용성이 높은 컴포넌트를 만들 때 자주 활용되는 특징입니다. 특히, 한가지 타입보다 여러 가지 타입에서 동작하는 컴포넌트를 생성하는데 사용됩니다.
 
 예시
@@ -434,11 +434,11 @@ let arr = [0, 1, null];
 
 ```
 위 변수 arr의 타입을 추론하기 위해서 배열의 각 아이템을 크게 number와
-null로 구분하는데 이 때 Best Common Type 알고리즘으로 다른 타입들과
+null로 구분하는데 이 때 **Best Common Type 알고리즘**으로 다른 타입들과
 가장 잘 호환되는 타입을 선정.
 
 #### 타입스크립트의 타입 체킹
-타입 체킹에 있어서 타입스크립트의 지향점은 타입 체크는 값의 형태에 기반하여 이루어져야 한다는 점이다. 이걸 Duck Typing 또는 Structural Subtyping 이라고 한다.
+타입 체킹에 있어서 타입스크립트의 지향점은 타입 체크는 값의 **형태**에 기반하여 이루어져야 한다는 점이다. 이걸 Duck Typing 또는 Structural Subtyping 이라고 한다.
 
 > TIP
 
@@ -472,6 +472,16 @@ div.innerText;
 ```
 사용 예
 ```
+  interface Developer {
+    name: string;
+    skill: string;
+  }
+
+  interface Person {
+    name: string;
+    age: number;
+  }
+
   if (isDeveloper(tony)) {
     tony.skill
   } else {
@@ -565,7 +575,7 @@ let empty2: Empty<number>;
 empty1 = empty2;
 empty2 = empty1;
 
-// 둘다 쌉가능, 구조적으로 같기 때문에
+// 둘다 쌉가능, 구조적으로 같기 때문에 (여기서 구조적으로 같다는 것은 { } 안에 내용이 같다고 봐도 무방하다.)
 
 interface NotEmpty<T> {
     data: T;
@@ -574,7 +584,8 @@ interface NotEmpty<T> {
 let notempty1: NotEmpty<string>;
 let notempty2: NotEmpty<number>;
 
-notempty1 = notempty2; // 호환 x
+// { } 안에 내용이 달라지기 때문에 어느쪽으로든 호환이 될 수 없다.
+notempty1 = notempty2; // 호환 x 
 notempty2 = notempty1; // 호환 x
 ```
 
@@ -583,3 +594,192 @@ notempty2 = notempty1; // 호환 x
 
 #### 타입 모듈화
 export, import
+
+#### 타입스크립트 선언 파일
+
+---------
+타입스크립트 선언 파일 d.ts는 타입스크립트 코드의 타입 추론을 돕는 파일이다. 예를 들어 전역 변수로 선언한 변수를 특정 파일에서
+import 구문 없이 사용하는 경우 해당 변수를 인식하지 못한다. 그럴 때 아래와 같이 해당 변수를 선언해서 에러가 나지 않게 할 수 있다.
+
+```
+  declare const global = 'sth';
+```
+
+#### 전역 변수와 전역 함수에 대한 타입 선언
+
+```
+  // 전역 변수
+  declare const pi = 3.14;
+
+  // 전역 함수
+  declare namespace myLib {
+    function greet(person: string): string;
+    let name: string;
+  }
+
+  myLib.greet('방루이');
+  myLib.name = '방루이';
+```
+
+> Tip
+> Use declare namespace to describe types or values accessed by dotted notation.
+
+```
+  declare namespace globalValues {
+    let redColor: string;
+    let primaryColor: string;
+  }
+
+  globalValues.redColor;
+  globalValues.primaryColor;
+```
+
+#### 배열 인덱싱
+
+```
+
+  interface StringArray {
+    [index: number]: string;
+  }
+
+  const arr: StringArray = ['Thor', 'Hulk'];
+  arr[0]; // 'Thor'
+```
+
+타입으로 배열 변경 제한
+
+```
+  interface ReadonlyStringArray {
+    readonly [index: number]: string;
+  }
+
+  const arr2: ReadonlyStringArray = ['react', 'vue'];
+  arr2[2] = 'angular'; // Error!!!
+```
+
+
+
+==============================
+
+### Advanced Type
+
+#### Utility Type (제네릭 타입이라고도 불린다.)
+
+유틸리티 타입은 **이미 정의해 놓은 타입을 변환할 때** 사용하기 좋은 타입 문법이다.
+유틸리티 타입을 꼭 쓰지 않더라도 기존의 인터페이스, 제네릭 등의 기본 문법으로
+충분히 타입을 변환할 수 있지만 유틸리티 타입을 쓰면 훨씬 더 간결한 문법으로
+타입을 정의할 수 있다.
+
+##### Partial
+
+```
+  interface Address {
+    email: string;
+    address: string;
+    detailAddress: string;
+  }
+
+  type MayHaveEmail = Partial<Address>; 
+
+  const me: MayHaveEmail = {}; // 가능
+  const you: MayHaveEmail = { email: 'kang@naver.com' }; // 쌉가능
+  const all: MayHaveEmail = { email: 'paul@gmail.com', address: '서울 종로구', detailAddress: '새문안로 3길' }; // 쌉가능
+
+  // 사실 실무에서 거의 `optional` 으로 처리하는 것 같다.
+
+  interface OptionalAddress {
+    email?: string;
+    address?: string;
+    detailAddress?: string;
+  }
+```
+
+##### Pick
+
+픽 타입은 특정 타입에서 몇개의 속성을 선택하여 타입을 정의
+```
+  interface Hero {
+    name: string;
+    skill: string;
+  }
+
+  const human: Pick<Hero, 'name'> = {
+    name: '그냥 사람',
+  }
+```
+
+##### Omit
+
+특정 타입에서 지정된 속성만 제거한 타입을 정의한다.
+
+```
+
+  interface AddressBook {
+    name: string;
+    phone: number;
+    address: string;
+    company: string;
+  }
+
+  const phoneBook: Omit<AddressBook, 'address'> = {
+    name: 'boo',
+    phone: '01000003333',
+    company: 'babo'
+  }
+
+  const jjambbong: Omit<AddressBook, 'address' | 'company'> = {
+    name: 'jjangjjang',
+    phone: 01022223333'
+  }
+
+```
+
+#### Mapped Type
+
+맵드 타입이란 기존에 정의되어 있는 타입을 새로운 타입으로 변환해 주는 문법을 의미한다. 마치 자바스크립트 map() API 함수를 타입에 적용한 것과 같은 효과.
+
+
+맵드 타입의 기본 문법
+
+{ [ P in K ] : T }
+{ [ P in K ] ? : T }
+{ readonly [ P in K ] : T }
+{ readonly [ P in K ] ? : T }
+
+* 여기서 `P in K` 는 자바스크립트의 `for in` 처럼 순회를 한다.
+
+맵드 타입 실용 예제
+```
+
+// 공식문서 맵드 타입의 구조
+type Subset<T> = {
+  [K in keyof T]?: T[K];
+}
+
+/*
+파셜(Partial)의 내부 구조와 그냥 똑같다.
+
+type Partial<T> = {
+    [P in keyof T]?: T[P];
+};
+*/
+
+```
+
+위 Subset 타입을 적용하면 아래와 같은 객체를 모두 정의할 수 있다.
+
+```
+  interface Person {
+    name: string;
+    age: string;
+  }
+
+  const ageOnly: Subset<Person> = { age: 23 };
+  
+  const nameOnly: Subset<Person> = { name: 'paul' };
+
+  const empty: Subset<Person> = { };
+
+  const ironman: Subset<Person> = { name: 'robert', age: 40 };
+
+```
