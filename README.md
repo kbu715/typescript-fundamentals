@@ -173,9 +173,11 @@ const name: MyName = 'paul';
 차이점이 있는지 확인해볼 수 있다.
 
 type별칭
+
 ![type별칭](https://user-images.githubusercontent.com/63832678/105606589-ae65e100-5ddd-11eb-9d7d-b2ea90e42180.png)
 
 interface
+
 ![인터페이스](https://user-images.githubusercontent.com/63832678/105606601-c473a180-5ddd-11eb-9177-5aa31e45abe4.png)
 
 
@@ -506,7 +508,7 @@ i = new Avengers(); // OK, because of structural typing
 ```
 
 구조적 타이핑 예시
-- **구조적 타이핑(structural typing)**이란 코드 구조 관점에서 타입이 서로 호환되는지의 여부를 판단하는 것이다. 아래 코드를 보자.
+**구조적 타이핑(structural typing)**이란 코드 구조 관점에서 타입이 서로 호환되는지의 여부를 판단하는 것이다. 아래 코드를 보자.
 
 ```
 interface Avengers {
@@ -742,8 +744,11 @@ import 구문 없이 사용하는 경우 해당 변수를 인식하지 못한다
 맵드 타입의 기본 문법
 
 { [ P in K ] : T }
+
 { [ P in K ] ? : T }
+
 { readonly [ P in K ] : T }
+
 { readonly [ P in K ] ? : T }
 
 * 여기서 `P in K` 는 자바스크립트의 `for in` 처럼 순회를 한다.
