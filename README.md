@@ -8,7 +8,7 @@
 
 ## 타입스크립트 시작
 
-npm i typescript -g
+#### **npm i typescript -g**
 
 tsc : typescript compile
 
@@ -30,30 +30,60 @@ tsc index.ts
 
 - string
 - number
-
-- Array<number>, Array<string>
+- Array<>
 - number[], string[]
-
 - boolean
-
 - object
-- { age: number; name: string }
+{ age: number; name: string }
 
-```
+```typescript
     const person: { age: number; name: string } = { age: 100, name: 'Capt' };
-
 ```
 
-- 튜플 : 모든 인덱스의 타입이 정해져있는 배열
-- [string, number]
+- tuple : 모든 인덱스의 타입이 정해져있는 배열
+  예) [string, number]
 
-```
+```typescript
     let address: [string, number] = ['종로', 5000]
+```
+- enum 
+```typescript
+  enum Avengers { Capt, IronMan, Thor }
+  let hero: Avengers = Avengers.Capt;
+```
+enum은 index 번호로도 접근할 수 있다.
+```typescript
+  enum Avengers { Capt, IronMan, Thor }
+  let hero: Avengers = Avengers[0];
+```
+
+- any
+기존에 자바스크립트로 구현되어 있는 웹 서비스 코드에 타입스크립트를 점진적으로 적용할 때 활용하면 좋은 타입이다.
+단어 그대로 모든 타입에 대해서 허용한다는 의미. 
+
+- void
+변수에는 undefined와 null만 할당하고, 함수에는 반환 값을 설정할 수 없는 타입이다.
+```typescript
+let unuseful: void = undefined;
+function notuse(): void {
+  console.log('sth');
+}
+```
+
+- never
+함수의 끝에 절대 도달하지 않는다는 의미를 지닌 타입.
+```typescript
+// 이 함수는 절대 함수의 끝까지 실행되지 않는다는 의미
+function neverEnd(): never {
+  while (true) {
+
+  }
+}
 ```
 
 #### 함수 타입 - 파라미터, 반환값
 
-```
+```typescript
 // 함수에 타입을 정의하는 가장 기본적인 방식
 function sum(a: number, b: number): number {
     return a+b;
@@ -62,22 +92,22 @@ function sum(a: number, b: number): number {
 
 #### 파라미터를 제한하는 특성
 
-```
+```typescript
     function sum(a:number, b:number):number {
         return a+b;
     }
 
     sum(10,20,30,40);
 
-    // `2개의 인수가 필요한데 4개를 가져왔습니다` 라는 에러가 난다.
+    // '2개의 인수가 필요한데 4개를 가져왔습니다' 라는 에러가 난다.
     // 자바스크립트는 유연하게 넘어가지만 타입스크립트는 좀더 엄격하게 검사한다.
 ```
 
-#### 함수의 옵셔널 파라미터
+#### 함수의 옵셔널 파라미터 Optional Parameter
 
-```
+```typescript
     function log(a: string, b?: string, c?: string){
-
+      // ......
     }
 
     log('hello')
@@ -89,7 +119,7 @@ function sum(a: number, b: number): number {
 
 #### 인터페이스
 
-```
+```typescript
 // 인터페이스
 interface User {
   name: string;
@@ -97,7 +127,7 @@ interface User {
 }
 ```
 
-```
+```typescript
 // 함수의 스펙(구조)에 인터페이스를 활용
 interface SumFunction {
     (a: number, b: number): number;
@@ -109,7 +139,7 @@ sum = function(a: number, b: number){
 }
 ```
 
-```
+```typescript
 // 배열의 인덱싱에 사용하는 경우
 interface StringArray {
     [index: number]: string;
@@ -119,7 +149,7 @@ interface StringArray {
     arr[1] = 10;
 ```
 
-```
+```typescript
 //객체 접근 방식인 <딕셔너리 패턴><dictionary pattern>
 interface StringRegexDictionary {
   [key: string]: RegExp
@@ -132,7 +162,7 @@ let obj: StringRegexDictionary = {
 
 ```
 
-```
+```typescript
 // 인터페이스 확장(extends, 상속)
 interface Person {
     name: string;
@@ -156,7 +186,7 @@ const paul: Developer = {
 
 타입 별칭은 특정 타입이나 인터페이스를 참조할 수 있는 타입 변수를 의미한다.
 
-```
+```typescript
 //스트링 타입을 사용할 때
 const name: string = 'paul';
 
@@ -172,10 +202,10 @@ const name: MyName = 'paul';
 할 수 있게 이름을 부여하는 것과 같다. 이러한 특징은 VSCode상의 프리뷰 상태로 다른 타입과 어떤 
 차이점이 있는지 확인해볼 수 있다.
 
-- type별칭
+**type별칭**
 ![type별칭](https://user-images.githubusercontent.com/63832678/105606589-ae65e100-5ddd-11eb-9d7d-b2ea90e42180.png)
 
-- interface
+**interface**
 ![인터페이스](https://user-images.githubusercontent.com/63832678/105606601-c473a180-5ddd-11eb-9177-5aa31e45abe4.png)
 
 
