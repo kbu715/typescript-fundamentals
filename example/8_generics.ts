@@ -48,6 +48,6 @@ function getAllowedOptions<T extends keyof ShoppingItems>(option: T): T {
     return option;
   }
 }
-getAllowedOptions('name');
+getAllowedOptions('price');
 // const a = getAllowedOptions('name');
 // a.toUpperCase(); // Name
