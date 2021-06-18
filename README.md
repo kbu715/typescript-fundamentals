@@ -125,6 +125,11 @@ interface User {
   name: string;
   age: number;
 }
+
+const seho: User = {
+  age: 40,
+  name: '세호'
+}
 ```
 
 ```typescript
@@ -160,6 +165,11 @@ let obj: StringRegexDictionary = {
   jsFile: /\.js$/
 }
 
+// key: string 으로 자동 추론된다.
+Object.keys(obj).forEach(function(key){
+  //...
+}))
+
 ```
 
 ```typescript
@@ -176,12 +186,38 @@ interface Developer extends Person {
 
 const paul: Developer = {
     name: 'kang',
-    age: 20,
+    age: 31,
     language: 'typescript'
 }
 ```
 
+##### 읽기 전용 속성
+읽기 전용 속성은 인터페이스로 객체를 처음 생성할 때만 값을 할당하고 그 이후에는 변경할 수 없는 속성을 의미한다. 문법은 다음과 같이 readonly 속성을 앞에 붙임.
 
+```typescript
+interface CraftBeer {
+  readonly brand: string;
+}
+```
+
+```typescript
+let myBeer: CraftBeer = {
+  brand: 'Belgian Monk'
+};
+myBeer.brand = 'Korean Carpenter'; // error!
+```
+
+##### 읽기 전용 배열
+배열을 선언할 때 `ReadonlyArray<T>` 타입을 사용하면 읽기 전용 배열을 생성할 수 있다.
+
+```typescript
+let arr: ReadonlyArray<number> = [1,2,3];
+arr.splice(0,1); // error
+arr.push(4); // error
+arr[0] = 100; // error
+arr = [10, 20, 30]; // error
+```
+위처럼 배열을 ReadonlyArray로 선언하면 배열의 내용을 변경할 수 없다. 선언하는 시점에만 값을 정의 할 수 있다. 주의!
 #### 타입 별칭(Type Aliases)
 
 타입 별칭은 특정 타입이나 인터페이스를 참조할 수 있는 타입 변수를 의미한다.
@@ -202,10 +238,8 @@ const name: MyName = 'paul';
 할 수 있게 이름을 부여하는 것과 같다. 이러한 특징은 VSCode상의 프리뷰 상태로 다른 타입과 어떤 
 차이점이 있는지 확인해볼 수 있다.
 
-**type별칭**
 ![type별칭](https://user-images.githubusercontent.com/63832678/105606589-ae65e100-5ddd-11eb-9d7d-b2ea90e42180.png)
 
-**interface**
 ![인터페이스](https://user-images.githubusercontent.com/63832678/105606601-c473a180-5ddd-11eb-9177-5aa31e45abe4.png)
 
 
@@ -213,9 +247,9 @@ type vs interface
 타입별칭과 인터페이스의 가장 큰 차이점은 타입의 확장 가능/불가능 여부이다.
 인터페이스는 확장이 가능한데(extends, 상속) 반해 타입별칭은 불가능하다. 따라서, type보다는 interface로 선언해서 사용하는 것을 추천한다.
 
-- 좋은 소프트웨어는 언제나 확장이 용이해야 한다.
+- 좋은 소프트웨어는 언제나 확장이 용이해야 한다. 😀
 
-#### Union Type 유니온 타입 '|'
+#### Union Type - |
 
 하나의 타입 이상 쓸 수 있게 해준다. 
 
@@ -241,10 +275,29 @@ function logMessage(value: string | number) {
 }   
 ```
 
-타입 가드 : 특정 타입으로 타입의 범위를 좁혀나가는 (필터링하는) 과정
----------------------------------------------------------------
+- 인터페이스 같은 구조체 여러개를 유니언 타입으로 썼을 때 공통된 속성만 쓸 수 있다.
 
-#### Intersection Type - '&'
+```typescript
+  interface Developer {
+    name: string;
+    skill: string;
+  }
+
+  interface Person {
+    name: string;
+    age: number;
+  }
+
+  function askSomeone(someone: Developer | Person) {
+    someone.name // Ok
+    someone.skill // Error
+    someone.age // Error
+  }
+```
+
+ `타입 가드` : 특정 타입으로 타입의 범위를 좁혀나가는 (필터링하는) 과정
+
+#### Intersection Type - &
 
 ```typescript
 interface Developer {
@@ -264,8 +317,9 @@ function askSomeone(someone: Developer | Person) {
 
 function askSomeone(someone: Developer & Person) {
   someone.name; // O
-  someone.age; // O // 모든 속성 접근 가능
-  someone.skill;
+  someone.age; // O 
+  someone.skill;// O
+  // 모든 속성 접근 가능
 }
 
 ```
@@ -273,8 +327,9 @@ function askSomeone(someone: Developer & Person) {
 #### 유니온 타입과 인터섹션 타입의 차이점
 
 유니온 **|** : a 타입이거나 b타입이거나
-인터섹션 **&** : a 타입과 b 타입의 속성을 모두 합친 새로운 c 타입, 호출할 때 모든 속성을 다 적어줘야 에러가 안난다.
+인터섹션 **&** : a 타입과 b 타입의 속성을 모두 합친 새로운 `c 타입`, 호출할 때 모든 속성을 다 적어줘야 에러가 안난다.
 
+📌 상대적으로 유니언 타입이 더 많이 쓰인다.
 
 #### 이넘 enum
 특정 값들의 집합을 의미하는 자료형이다. 예를 들어 `드랍다운` 목록으로 사용하기 좋다.
@@ -313,8 +368,8 @@ console.log(myShoes) // '아디다스'
 
 ```typescript
 enum Answer {
-  Yes = 'y',
-  No = 'n'
+  Yes = 'Y',
+  No = 'N'
 }
 
 function askQuestion(answer: Answer){
@@ -348,8 +403,8 @@ class Person {
 }
 ```
 
-멤버 변수에 대한 변수의 유효범위 -> **private**, **public**, **protected**(기본적으로 public이다)
-__readonly__ : 접근만 할 수 있고 변경할 순 없다. -> 읽기만 할 수 있다.
+멤버 변수에 대한 변수의 유효범위 => **private**, **public**, **protected**(기본적으로 public이다)
+__readonly__ : 접근만 할 수 있고 변경할 순 없다. => 읽기만 할 수 있다.
 
 
 ### 제네릭 Generics
@@ -393,6 +448,7 @@ interface LengthType {
   length: number;
 }
 
+// T는 lengthType의 하위 타입
 function logTextLength<T extends LengthType>(text: T): T {
   text.length;
   return text;
@@ -415,9 +471,9 @@ function getShoppingItemOption<T extends keyof ShoppingItem>(itemOption: T): T {
   return itemOption;
 }
 
-getShoppingItemOption('name')
-getShoppingItemOption('price')
-getShoppingItemOption('stock')
+getShoppingItemOption('name') // name
+getShoppingItemOption('price') // price
+getShoppingItemOption('stock') // stock
 ```
 
 ### 타입추론
@@ -444,7 +500,7 @@ interface Dropdown<T> {
   title: string;
 }
 
-interface DetailedDropdown<K> extends Dropdown<T> {
+interface DetailedDropdown<K> extends Dropdown<K> {
   description: string;
   tag: K;
 }
@@ -461,18 +517,22 @@ var detailItems: DetailedDropdown<number> = {
 타입은 보통 몇 개의 표현식(코드)을 바탕으로 타입을 추론한다. 그리고 그 표현식을 이용하여 가장 근접한 타입을 추론하게 되는데 이 가장 근접한 타입을 Best Common Type이라고 한다.
 ```typescript
 let arr = [0, 1, null];
-
+// (number | null)[]
 ```
 위 변수 arr의 타입을 추론하기 위해서 배열의 각 아이템을 크게 number와
-null로 구분하는데 이 때 **Best Common Type 알고리즘**으로 다른 타입들과
+null로 구분하는데 이 때 `Best Common Type Algorithm`으로 다른 타입들과
 가장 잘 호환되는 타입을 선정.
+
+#### Language Server
+타입스크립트 코드 작성시 `Language Server` 가 돌고 있다고 인식하자.
 
 #### 타입스크립트의 타입 체킹
 타입 체킹에 있어서 타입스크립트의 지향점은 타입 체크는 값의 **형태**에 기반하여 이루어져야 한다는 점이다. 이걸 Duck Typing 또는 Structural Subtyping 이라고 한다.
 
-> TIP
+💡💡💡
 
-> Duck Typing : 객체의 변수 및 메서드의 집합이 객체의 타입을 결정하는 것을 의미. 동적 타이핑의 한 종류 Structural Subtyping : 객체의 실제 구조나 정의에 따라 타입을 결정하는 것을 의미
+> Duck Typing : 객체의 변수 및 메서드의 집합이 객체의 타입을 결정하는 것을 의미. 동적 타이핑의 한 종류 
+> Structural Subtyping : 객체의 실제 구조나 정의에 따라 타입을 결정하는 것을 의미
 
 
 ### 타입 단언 (type assertion)
@@ -499,7 +559,13 @@ div.innerText;
   function isDeveloper(target: Developer | Person): target is Developer {
     return (target as Developer).skill !== undefined;
   }
+
+  function isPerson(target: Developer | Person): target is Person {
+    return (target as Person).age !== undefined;
+  }
 ```
+- `is` 라는 키워드가 타입가드에서 사용된다.
+
 사용 예
 ```typescript
   interface Developer {
@@ -513,14 +579,15 @@ div.innerText;
   }
 
   if (isDeveloper(tony)) {
-    tony.skill
+    console.log(tony.skill); // 토니는 developer이기 때문에 skill이 제공.
   } else {
-    tony.age
+    console.log(tony.age);
   }
 ```
 
 
 #### 타입 호환 (Type Compatiblility)
+타입 호환이란 타입스크립트 코드에서 특정 타입이 다른 타입에 잘 맞는지를 의미한다. 예를들면 아래와 같은 경우
 
 ```typescript
 interface Ironman {
@@ -535,8 +602,8 @@ let i: Ironman;
 i = new Avengers(); // OK, because of structural typing  
 ```
 
-구조적 타이핑 예시
-**구조적 타이핑(structural typing)**이란 코드 구조 관점에서 타입이 서로 호환되는지의 여부를 판단하는 것이다. 아래 코드를 보자.
+#####구조적 타이핑 예시
+구조적 타이핑(structural typing)이란 코드 구조 관점에서 타입이 서로 호환되는지의 여부를 판단하는 것이다. 아래 코드를 보자.
 
 ```typescript
 interface Avengers {
@@ -622,12 +689,11 @@ notempty2 = notempty1; // 호환 x
 #### Soundness란?
 타입스크립트는 컴파일 시점에 타입을 추론할 수 없는 특정 타입에 대해서 일단 안전하다고 보는 특성이 있다. 이걸 "들리지 않는다(it is said to not be sound)"라고 표현한다.
 
-#### 타입 모듈화
-export, import
+
+---
 
 #### 타입스크립트 선언 파일
 
----------
 타입스크립트 선언 파일 d.ts는 타입스크립트 코드의 타입 추론을 돕는 파일이다. 예를 들어 전역 변수로 선언한 변수를 특정 파일에서
 import 구문 없이 사용하는 경우 해당 변수를 인식하지 못한다. 그럴 때 아래와 같이 해당 변수를 선언해서 에러가 나지 않게 할 수 있다.
 

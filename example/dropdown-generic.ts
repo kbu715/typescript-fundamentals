@@ -26,7 +26,7 @@ const numberOfProducts: Item<number>[] = [
   { value: 3, selected: false },
 ];
 
-function createDropdownItem<T>(item: Item<T>) {
+function createDropdownItem<T>(item: Item<T>): HTMLOptionElement {
   const option = document.createElement('option');
   option.value = item.value.toString();
   option.innerText = item.value.toString();
