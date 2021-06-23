@@ -882,3 +882,26 @@ type Partial<T> = {
   const ironman: Subset<Person> = { name: 'robert', age: 40 };
 
 ```
+
+-------
+
+### 제네릭에서 Auto Close Tag 기능 작동 문제
+
+vscode 확장프로그램중 auto-close-tag가 제네릭 작성시 작동하는 문제.
+불편함을 느끼면서도 해결 방법을 찾지 않은 것을 반성하며...
+
+다음의 코드를 setting.json 에 추가하자
+
+```json
+{
+  "auto-close-tag.activationOnLanguage": [
+    "html",
+    "xml",
+    "javascript",
+    "javascriptreact",
+    "typescriptreact"
+  ]
+}
+```
+
+파일 형식을 넣어주면 그 외에 파일에서는 작동하지 않는 것 같다.
