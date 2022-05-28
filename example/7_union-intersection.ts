@@ -34,7 +34,20 @@ interface Person {
   age: number;
 }
 
-function askSomeone(someone: Developer | Person) {
+function askSomeone(someone: Developer | Person) { // union
   someone.name; // O
   someone.age; // X // 공통 속성만 접근 가능 (유니온 타입의 특징)
+  someone.skill; // X
 }
+
+function askSomeone2(someone: Developer & Person) { // intersection
+  someone.name; // O
+  someone.age; // O
+  someone.skill; // O
+}
+
+askSomeone2({ name: 'kang', skill: 'typescript', age: 14 });
+// Property 'age' is missing in type '{ name: string; skill: string; }' but required in type 'Person'
+// askSomeone2({ name: 'kang', skill: 'typescript' });
+
+// 실무에선 유니언 타입을 훨씬 많이 쓴다.

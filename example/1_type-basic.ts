@@ -12,7 +12,10 @@ arr.push('hi');
 const items: string[] = [];
 // items.push(10);
 
-// 튜플
+const nums: number[] = [];
+nums.push(20);
+
+// 튜플 Tuple
 const address: [string, number] = ['판교', 40];
 
 // 객체
@@ -22,6 +25,9 @@ const obj: object = {};
 // 타입 객체
 const person: { age: number; name: string } = { age: 100, name: 'Capt' };
 person.age = 101;
+person.name = "paul"
+
 
 // 진위값
 let isLogin: boolean = false;
+let isLoggedIn: boolean = true;

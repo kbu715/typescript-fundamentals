@@ -1,10 +1,12 @@
 // 이넘(Enum)
 enum Avengers {
-  Capt,
-  Ironman,
-  Hulk,
+  Capt = 10,
+  Ironman, // 11
+  Hulk, // 12
 }
 const myHero = Avengers.Capt;
+
+// console.log(myHero);
 
 // any
 let a: any = 'hi';

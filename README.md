@@ -62,7 +62,7 @@ enum은 index 번호로도 접근할 수 있다.
 단어 그대로 모든 타입에 대해서 허용한다는 의미. 
 
 - void
-변수에는 undefined와 null만 할당하고, 함수에는 반환 값을 설정할 수 없는 타입이다.
+변수에는 undefined와 null만 할당하고, 함수의 반환 값이 없을 경우 반홥 타입으로 설정할 수 있는 타입이다.
 ```typescript
 let unuseful: void = undefined;
 function notuse(): void {

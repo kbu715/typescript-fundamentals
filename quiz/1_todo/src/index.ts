@@ -1,8 +1,8 @@
-interface Todo {
+type Todo = {
   id: number;
   title: string;
   done: boolean;
-}
+};
 
 let todoItems: Todo[];
 
@@ -44,10 +44,7 @@ function showCompleted(): Todo[] {
   return todoItems.filter(item => item.done);
 }
 
-// TODO: 아래 함수의 내용을 채워보세요. 아래 함수는 `addTodo()` 함수를 이용하여 2개의 새 할 일을 추가하는 함수입니다.
 function addTwoTodoItems(): void {
-  // addTodo() 함수를 두 번 호출하여 todoItems에 새 할 일이 2개 추가되어야 합니다.
-
   const item1 = { id: 4, title: '코딩테스트', done: false };
   const item2 = { id: 5, title: '운동', done: false };
   addTodo(item1);
@@ -59,6 +56,7 @@ function log(): void {
   console.log(todoItems);
 }
 
+// 실행 Part
 todoItems = fetchTodos();
 addTwoTodoItems();
 log();

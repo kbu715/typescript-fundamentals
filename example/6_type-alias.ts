@@ -48,3 +48,5 @@ const skill:MySkill = {
   backend: 'Node.js',
   database: 'mongoDB'
 }
+
+// 좋은 소프트웨어는 확장이 용이해야 한다는 원칙!

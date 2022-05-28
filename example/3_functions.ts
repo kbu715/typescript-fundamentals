@@ -28,3 +28,9 @@ function printText(text: string, type?: string) {
   console.log(text);
 }
 printText('hi');
+
+function sumALl(...args: Array<number>) {
+  return args.reduce((acc, cur) => acc + cur, 0);
+}
+
+sumALl(10, 20, 30, 40, 50);

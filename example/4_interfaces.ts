@@ -13,7 +13,7 @@ function getUser(user: User) {
 }
 getUser(seho);
 
-//함수의 전체 타입에 사용하는 경우
+//함수의 스펙(구조)에 인터페이스 활용
 interface SumFunction {
   (a: number, b: number): number;
 }
@@ -50,22 +50,27 @@ interface StringRegexDictionary {
 let obj: StringRegexDictionary = {
   // sth: /abc/,
   cssFile: /\.css$/,
-  jsFile: /\.js$/
+  jsFile: /\.js$/,
+  tsFile: /\.ts$/,
+  tsxFile: /\.tsx$/,
 }
 
 // obj['cssFile'] = 'a' 바로에러, 정규식 표현이 아니기때문에
 
 Object.keys(obj).forEach(function(value){ // value에 마우스를 갖다대면 value: string 이라고 타입추론이 된다.
-  // console.log(typeof value)
+  console.log(typeof value)
 })
 
 
-// 인터페이스 확장
+// 인터페이스 확장 extends
 interface Person {
   name: string;
   age: number; // 옵셔널 선택자 ? 동일하게 적용 가능
 }
 interface Developer extends Person {
   language: string;
+  salay: number;
 }
-const joo: Developer = { name: 'joo', age: 20, language: 'ts' };
+const joo: Developer = { name: 'joo', age: 20, language: 'ts', salay: 4200 };
+
+

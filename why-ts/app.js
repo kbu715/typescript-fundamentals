@@ -1,5 +1,5 @@
 // api url
-const url = 'https://jsonplaceholder.typicode.com/users/1';
+const url = 'https://jsonplaceholder.typicode.com/users/2';
 
 // dom
 const username = document.querySelector('#username');
