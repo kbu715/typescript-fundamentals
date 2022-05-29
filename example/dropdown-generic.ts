@@ -14,7 +14,7 @@ interface Item<T> {
   selected: boolean;
 }
 
-const emails: Item<string>[] = [
+const emails: Array<Item<string>> = [
   { value: 'naver.com', selected: true },
   { value: 'gmail.com', selected: false },
   { value: 'hanmail.n et', selected: false },

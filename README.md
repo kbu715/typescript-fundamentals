@@ -454,6 +454,8 @@ function logTextLength<T extends LengthType>(text: T): T {
   return text;
 }
 
+// length 속성을 갖고있는 타입만 허락한다.
+lgTextLength("string"); // ok
 logTextLength(10); // error
 logTextLength({ length: 10 });
 
@@ -461,7 +463,7 @@ logTextLength({ length: 10 });
 
 ```typescript
 //제네릭의 타입 제한3 - keyof
-interface ShoppingItems {
+interface ShoppingItem {
   name: string;
   price: number;
   stock: number;
@@ -474,6 +476,7 @@ function getShoppingItemOption<T extends keyof ShoppingItem>(itemOption: T): T {
 getShoppingItemOption('name') // name
 getShoppingItemOption('price') // price
 getShoppingItemOption('stock') // stock
+getShoppingItemOption('value') // error
 ```
 
 ### 타입추론
@@ -505,7 +508,7 @@ interface DetailedDropdown<K> extends Dropdown<K> {
   tag: K;
 }
 
-var detailItems: DetailedDropdown<number> = {
+const detailItems: DetailedDropdown<number> = {
   value: 'hi', // error: Type 'string' is not assignable to type 'number'.
   title: 'a',
   description: 'b',
