@@ -1,5 +1,5 @@
-import axios, { AxiosResponse } from 'axios';
 import Chart from 'chart.js';
+import { fetchCountryInfo, fetchCovidSummary } from './apis';
 // 타입 모듈
 import {
   CovidSummaryResponse,
@@ -8,32 +8,18 @@ import {
   Country,
   CountrySummaryInfo,
 } from './covid/index';
-
-// utils
-// DOM 접근 함수
-// HTMLElement 하위 타입들만 받게 제한.
-// 타입단언이 이런식으로 (return element as T) 제네릭과 함께 쓰여 좋은 유틸 기능으로 쓰일 수 있다.
-// `T extends HTMLElement = HTMLDivElement` 에서 HTMLDivElement 는 디폴트 타입
-// const abc = $('.abc'); --> abc 타입은 HTMLDivElement
-function $<T extends HTMLElement = HTMLDivElement>(selector: string) {
-  const element = document.querySelector(selector);
-  return element as T;
-}
-function getUnixTimestamp(date: Date | string) {
-  return new Date(date).getTime();
-}
+import { $, getUnixTimestamp } from './utils';
 
 // DOM
 // var a: Element | HTMLElement | HTMLParagraphElement
 // 점점 구체화 된다. Element -> HTMLElement -> HTMLParagraphElement
 const confirmedTotal = $<HTMLSpanElement>('.confirmed-total');
-// 타입 단언(Type Assertion)
-const deathsTotal = $('.deaths') as HTMLParagraphElement;
-const recoveredTotal = $('.recovered') as HTMLParagraphElement;
-const lastUpdatedTime = $('.last-updated-time') as HTMLParagraphElement;
-const rankList = $('.rank-list') as HTMLOListElement;
-const deathsList = $('.deaths-list') as HTMLOListElement;
-const recoveredList = $('.recovered-list') as HTMLOListElement;
+const deathsTotal = $<HTMLParagraphElement>('.deaths');
+const recoveredTotal = $<HTMLParagraphElement>('.recovered');
+const lastUpdatedTime = $<HTMLParagraphElement>('.last-updated-time');
+const rankList = $<HTMLOListElement>('.rank-list');
+const deathsList = $<HTMLOListElement>('.deaths-list');
+const recoveredList = $<HTMLOListElement>('.recovered-list');
 const deathSpinner = createSpinnerElement('deaths-spinner');
 const recoveredSpinner = createSpinnerElement('recovered-spinner');
 
@@ -55,21 +41,6 @@ function createSpinnerElement(id: string) {
 // state
 let isDeathLoading = false;
 
-// api
-function fetchCovidSummary(): Promise<AxiosResponse<CovidSummaryResponse>> {
-  const url = 'https://api.covid19api.com/summary';
-  return axios.get(url);
-}
-
-function fetchCountryInfo(
-  countryCode: string | undefined,
-  status: CovidStatus
-): Promise<AxiosResponse<CountrySummaryResponse>> {
-  // status params: confirmed, recovered, deaths
-  const url = `https://api.covid19api.com/country/${countryCode}/status/${status}`;
-  return axios.get(url);
-}
-
 // methods
 function startApp() {
   setupData();
@@ -78,10 +49,7 @@ function startApp() {
 
 // events
 function initEvents() {
-  if (!rankList) {
-    return;
-  }
-  rankList.addEventListener('click', handleListClick);
+  rankList?.addEventListener('click', handleListClick);
 }
 
 async function handleListClick(event: Event) {
@@ -141,12 +109,9 @@ function setDeathsList(data: CountrySummaryResponse) {
     li.appendChild(span);
     li.appendChild(p);
     // no non null assertion (null이 아니다라고 단언)
-    // deathsList.appendChild(li);
+    // deathsList!.appendChild(li);
 
-    if (!deathsList) {
-      return;
-    }
-    deathsList.appendChild(li);
+    deathsList?.appendChild(li);
   });
 }
 
@@ -234,7 +199,7 @@ function renderChart(data: number[], labels: string[]) {
 
 function setChartData(data: CountrySummaryResponse) {
   const chartData = data
-    .slice(-14)
+    .slice(-14) // 최신 14일 데이터
     .map((value: CountrySummaryInfo) => value.Cases);
   const chartLabel = data
     .slice(-14)
